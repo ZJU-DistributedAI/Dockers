@@ -21,9 +21,9 @@ RUN tar -C /usr/local -xzf go1.10.3.linux-amd64.tar.gz && \
 
 
 # build geth
-RUN cd ~ &&\
-    git clone https://github.com/ethereum/go-ethereum 
+ADD go-ethereum go-ethereum
 RUN cd go-ethereum && \
+    chmod -R 777 . && \
     make geth && \
     cd ~ && \
     mkdir geth && \
@@ -74,7 +74,7 @@ RUN cd geth && \
 
 VOLUME ./geth:~/
 
-EXPOSE 16333 8545
+EXPOSE 16333 8545 30303
 
 # clean local packages
 RUN yum clean packages && \
